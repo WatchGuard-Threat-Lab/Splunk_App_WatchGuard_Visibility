@@ -1,0 +1,160 @@
+<form version="1.1">
+  <label>Endpoint Overview</label>
+  <fieldset submitButton="false">
+    <input type="time" token="time_select">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel id="counter_malware">
+      <title>Malware Alerts</title>
+      <html depends="$hiddenForCSS$">
+       <style>
+         #counter_malware {
+           width: 25% !important;
+         }
+       </style>
+      </html>
+      <single>
+        <search>
+          <query>`wg_epdr_default_index` eventtype="wg_endpoint_malware" | stats count</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="underLabel">past day</option>
+      </single>
+    </panel>
+    <panel id="graph_malware">
+      <html depends="$hiddenForCSS$">
+       <style>
+         #graph_malware {
+           width: 75% !important;
+         }
+       </style>
+      </html>
+      <chart>
+        <search>
+          <query>`wg_epdr_default_index` eventtype="wg_endpoint_malware" | timechart count(eval(action="allowed")) AS "Allowed" count(eval(action="blocked")) AS "Blocked" count(eval(action="deferred")) AS "Deferred"</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">minmax</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel id="counter_pup">
+      <title>PUP Alerts</title>
+      <html depends="$hiddenForCSS$">
+       <style>
+         #counter_pup {
+           width: 25% !important;
+         }
+       </style>
+      </html>
+      <single>
+        <search>
+          <query>`wg_epdr_default_index` eventtype="wg_endpoint_alertpup" | stats count</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="underLabel">past day</option>
+      </single>
+    </panel>
+    <panel id="graph_pup">
+      <html depends="$hiddenForCSS$">
+       <style>
+         #graph_pup {
+           width: 75% !important;
+         }
+       </style>
+      </html>
+      <chart>
+        <search>
+          <query>`wg_epdr_default_index` eventtype="wg_endpoint_alertpup" | timechart count(eval(action="allowed")) AS "Allowed" count(eval(action="blocked")) AS "Blocked" count(eval(action="deferred")) AS "Deferred"</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">minmax</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel id="counter_vulns">
+      <title>Vulnerable Assets</title>
+      <html depends="$hiddenForCSS$">
+       <style>
+         #counter_vulns {
+           width: 25% !important;
+         }
+       </style>
+      </html>
+      <single>
+        <search>
+          <query>`wg_epdr_default_index` eventtype="wg_endpoint_vuln" | stats distinct_count(HostName) as "Vulnerable Assets"</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>10m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="underLabel">past day</option>
+      </single>
+    </panel>
+    <panel id="graph_vulns">
+      <title>Vulnerabilities</title>
+      <html depends="$hiddenForCSS$">
+       <style>
+         #graph_vulns {
+           width: 75% !important;
+         }
+       </style>
+      </html>
+      <chart>
+        <search>
+          <query>`wg_epdr_default_index` eventtype="wg_endpoint_vuln" | timechart count by signature</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>10m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">minmax</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+</form>

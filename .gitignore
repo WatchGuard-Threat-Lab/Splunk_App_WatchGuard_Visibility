@@ -1,0 +1,129 @@
+# Ignore example files from contentctl tool
+
+detections/*/.yml.example
+stories/*.yml.example
+tests/*/*.yml.example
+
+# IDE
+.vscode/
+
+# usual mac files
+.DS_Store
+#vim files
+*.swp
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+bin/.*
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+automated_detection_testing/venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# IDEA Env
+.idea
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+package/bin/sftp-config.json
+package/default/sftp-config.json
+*.code-snippets
+notes
+
+# detection_testing_batch innteractive mode
+bin/docker_detection_tester/*-test-run.json
+bin/docker_detection_tester/apps/
+bin/docker_detection_tester/security_content/
+bin/docker_detection_tester/test_config.json
+bin/docker_detection_tester/test_results/
+
+#generated files
+lookups/APP_ENRICHMENT_CACHE.db.db
+lookups/CVE_CACHE.db.db
+lookups/REFERENCE_CACHE.db.db	

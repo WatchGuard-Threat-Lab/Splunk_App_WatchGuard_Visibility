@@ -1,0 +1,82 @@
+<form version="1.1">
+  <label>WatchGuard Overview</label>
+  <fieldset submitButton="false">
+    <input type="time" token="time_select">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Threats</title>
+      <chart>
+        <search>
+          <query>`wg_firebox_default_index` OR `wg_epdr` eventtype="wg_firebox_malware" OR eventtype="wg_endpoint_malware"  OR eventtype="wg_endpoint_alertpup" | timechart count(eval(eventtype="wg_firebox_apt")) AS "APT Blocker", count(eval(eventtype="wg_firebox_gav" AND NOT signature="malicious")) AS "Gateway Antivirus", count(eval(eventtype="wg_firebox_gav" AND signature="malicious")) AS "Intelligent AV", count(eval(eventtype="wg_endpoint_malware")) AS "Endpoint Malware",
+count(eval(eventtype="wg_endpoint_alertpup")) as "Endpoint PUP"</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">zero</option>
+        <option name="charting.chart.showDataLabels">minmax</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisTitleX.text">Time</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel id="chart_network_threats">
+      <title>Top Network Threats</title>
+      <html depends="$hiddenForCSS$">
+       <style>
+         #chart_network_threats {
+           width: 50% !important;
+         }
+       </style>
+      </html>
+      <chart>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_malware" OR eventtype="wg_firebox_ips" | chart count(_raw) as Detections by signature</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>10m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+      </chart>
+    </panel>
+    <panel id="chart_endpoint_threats">
+      <title>Top Endpoint Threats</title>
+      <html depends="$hiddenForCSS$">
+       <style>
+         #chart_endpoint_threats {
+           width: 50% !important;
+         }
+       </style>
+      </html>
+      <chart>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_malware" OR eventtype="wg_firebox_ips" | eval signature=if(eventtype=="wg_firebox_malware", "Malware: " . signature, "IPS: " . signature)  | chart count(_raw) as Detections by signature</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>10m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+      </chart>
+    </panel>
+  </row>
+</form>

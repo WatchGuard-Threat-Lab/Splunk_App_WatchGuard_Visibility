@@ -1,0 +1,32 @@
+check_for_auto_update_features:
+  comment: 'No auto update features'
+check_splunk_logo:
+  comment: 'Splunk logo not in use'
+check_editing_and_proofreading:
+  comment: 'Grammar check complete'
+check_authorization_credentials:
+  comment: 'No credentials required'
+check_external_data_sources:
+  comment: 'No external data sources'
+check_dependencies:
+  comment: 'Dependencies properly listed'
+check_requires_access_to_files_outside_apps_dir:
+  comment: 'No access outside apps dir'
+check_documented_included_open_source:
+  comment: 'No open source explicitly included'
+check_for_reverse_shells:
+  comment: 'No reverse shells'
+check_fs_writes:
+  comment: 'No filesystem writes'
+check_link_includes_contact_info:
+  comment: 'Contact info in readme'
+check_search_acceleration:
+  comment: 'Acceleration not in use'
+check_install_on_claimed_targets:
+  comment: 'Installs correctly'
+check_embedded_links:
+  comment: 'No embedded links'
+check_hard_coded_paths:
+  comment: 'No hard-coded paths'
+check_for_known_vulnerabilities_in_third_party_libraries:
+  comment: 'No third party libraries'

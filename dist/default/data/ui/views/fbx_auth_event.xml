@@ -1,0 +1,107 @@
+<form version="1.1">
+  <label>Firebox Authentication</label>
+  <fieldset submitButton="false">
+    <input type="time" token="time_select">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel id="counter_events">
+      <title>User Authentications</title>
+      <html depends="$hiddenForCSS$">
+       <style>
+         #counter_events {
+           width: 25% !important;
+         }
+       </style>
+      </html>
+      <single>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_login" | stats count</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="underLabel">past hour</option>
+      </single>
+    </panel>
+    <panel id="graph_events">
+      <html depends="$hiddenForCSS$">
+       <style>
+         #graph_events {
+           width: 75% !important;
+         }
+       </style>
+      </html>
+      <chart>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_auth" | timechart count(eval(eventtype="wg_firebox_login")) AS "Success" count(eval(eventtype="wg_firebox_login_failed")) AS "Failed"</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">minmax</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel id="counter_users">
+      <title>Management Authentications</title>
+      <html depends="$hiddenForCSS$">
+       <style>
+         #counter_users {
+           width: 25% !important;
+         }
+       </style>
+      </html>
+      <single>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_management_login" | stats count</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="underLabel">past 24 hours</option>
+      </single>
+    </panel>
+    <panel id="graph_users">
+      <html depends="$hiddenForCSS$">
+       <style>
+         #graph_users {
+           width: 75% !important;
+         }
+       </style>
+      </html>
+      <chart>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_management" | timechart count(eval(eventtype="wg_firebox_management_login")) AS "Success" count(eval(eventtype="wg_firebox_management_login_failed")) AS "Failed"</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+</form>

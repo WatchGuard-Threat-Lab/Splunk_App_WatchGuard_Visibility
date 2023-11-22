@@ -1,0 +1,11 @@
+<nav search_view="search" color="#bc0f0f">
+  <view name="watchguard_overview" default="true"/>
+  <collection label="Firebox">
+    <view name="fbx_overview"/>
+    <view name="fbx_auth_event"/>
+  </collection>
+  <collection label="Endpoint">
+    <view name="endpoint_overview"/>
+    <view name="endpoint_malware"/>
+  </collection>
+</nav>

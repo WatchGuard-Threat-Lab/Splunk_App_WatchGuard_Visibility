@@ -1,0 +1,169 @@
+<form version="1.1">
+  <label>Firebox Overview</label>
+  <fieldset submitButton="false">
+    <input type="time" token="time_select">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel id="counter_users">
+      <title>Active Users</title>
+      <html depends="$hiddenForCSS$">
+       <style>
+         #counter_users {
+           width: 25% !important;
+         }
+       </style>
+      </html>
+      <single>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_login" | stats count</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="underLabel">past 24 hours</option>
+      </single>
+    </panel>
+    <panel id="graph_users">
+      <html depends="$hiddenForCSS$">
+       <style>
+         #graph_users {
+           width: 75% !important;
+         }
+       </style>
+      </html>
+      <chart>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_login" | timechart count(eval(eventtype="wg_firebox_login")) AS "Users" by firebox_name</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel id="download_throughput">
+      <title>Download Bandwidth</title>
+      <html depends="$hiddenForCSS$">
+       <style>
+         #download_throughput {
+           width: 50% !important;
+         }
+       </style>
+      </html>
+      <chart>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_traffic_end" | timechart eval(sum(bytes_in)/1000000) as "Download" by firebox_name</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">zero</option>
+        <option name="charting.chart.showDataLabels">minmax</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">GBs</option>
+      </chart>
+    </panel>
+    <panel id="upload_throughput">
+      <title>Upload Bandwidth</title>
+      <html depends="$hiddenForCSS$">
+       <style>
+         #upload_throughput {
+           width: 50% !important;
+         }
+       </style>
+      </html>
+      <chart>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_traffic_end" | timechart eval(sum(bytes_out)/1000000) as "Upload" by firebox_name</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">zero</option>
+        <option name="charting.chart.showDataLabels">minmax</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">GBs</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Total Traffic</title>
+      <single>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_traffic" | stats count</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="underLabel">past hour</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Denied Traffic</title>
+      <single>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_traffic_denied" | stats count</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="rangeColors">["0xd93f3c","0xd93f3c"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="underLabel">past hour</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Allowed Traffic</title>
+      <single>
+        <search>
+          <query>`wg_firebox_default_index` eventtype="wg_firebox_traffic_allowed" | stats count</query>
+          <earliest>$time_select.earliest$</earliest>
+          <latest>$time_select.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="rangeColors">["0x65a637","0x65a637"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="underLabel">past hour</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+</form>

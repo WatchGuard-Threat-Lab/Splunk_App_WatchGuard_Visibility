@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "2.0.0",
+  "info": {
+    "title": "WatchGuard Visibility App for Splunk",
+    "id": {
+      "group": null,
+      "name": "Splunk_App_WatchGuard_Visibility",
+      "version": "0.1.6"
+    },
+    "author": [
+      {
+        "name": "WatchGuard Technologies, Inc",
+        "email": null,
+        "company": null
+      }
+    ],
+    "releaseDate": null,
+    "description": "Visibility dashboards for WatchGuard Firebox and EPDR in Splunk",
+    "classification": {
+      "intendedAudience": "IT Professionals",
+      "categories": [
+        "IT Operations",
+        "Security, Fraud & Compliance"
+      ],
+      "developmentStatus": "Production/Stable"
+    },
+    "license": {
+      "name": null,
+      "text": null,
+      "uri": null
+    },
+    "privacyPolicy": {
+      "name": null,
+      "text": null,
+      "uri": null
+    },
+    "releaseNotes": {
+      "name": null,
+      "text": null,
+      "uri": null
+    }
+  },
+  "dependencies": {
+  },
+  "tasks": [],
+  "inputGroups": {
+  },
+  "incompatibleApps": {
+  },
+    "supportedDeployments": [
+    "_standalone",
+    "_distributed",
+    "_search_head_clustering"
+  ],
+  "targetWorkloads": [
+    "_search_heads",
+  ],
+  "platformRequirements": {
+    "splunk": {
+      "Enterprise": "*"
+    }
+  }
+}
