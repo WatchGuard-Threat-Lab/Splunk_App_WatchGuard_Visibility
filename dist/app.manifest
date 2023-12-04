@@ -49,7 +49,7 @@
     "_search_head_clustering"
   ],
   "targetWorkloads": [
-    "_search_heads",
+    "_search_heads"
   ],
   "platformRequirements": {
     "splunk": {
